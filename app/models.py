@@ -8,7 +8,6 @@ class Story(db.Model):
 	time = db.Column(db.String(90))
 	timestamp = db.Column(db.DateTime)
 	pseudonym = db.Column(db.String(64))
-	votes = db.Column(db.Integer)
 
 	def __repr__(self):
 		return '<Story %r>' % (self.title)
@@ -16,6 +15,7 @@ class Story(db.Model):
 class Vote(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	story_id = db.Column(db.Integer, db.ForeignKey("story.id"))
+	value = db.Column(db.Integer)
 
 	def __repr__(self):
 		return '<Vote %r>' % (self.title)

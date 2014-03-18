@@ -20,12 +20,12 @@
 
       <script>
       $(".voting p:nth-child(1)").click(function() {
-        var id = $("voting").data("storyid");
+        var id = $(this).data("storyid");
         $.post("/vote/" + id, {vote: 'up')
       })
 
       $(".voting p:nth-child(3)").click(function() {
-        var id = $("voting").data("storyid")
+        var id = $(this).data("storyid")
         $.post("/vote/" + id, {vote: 'down'})
       })
       </script>

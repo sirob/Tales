@@ -42,10 +42,15 @@ def story(id):
 		story = story)
 
 @app.route('/vote/<id>')
-def vote():
-	count = 0
-	if vote == 'down':
-		count = count - 1
-	else:
-		count = count + 1
-	return count
+def vote(id):
+	story = models.Story.query.get(id)
+	if request.method == 'POST':
+		vote = request.form['vote']
+		if vote == 'up':
+			post = Vote(story_id = story.id, value = 1)
+		else:
+			post = Vote(story_id = story.id, value = -1)
+		
+		db.session.add(post)
+		db.session.commit()
+	
