@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Local True Stories</title>
+		<title>Local Tales</title>
 		
 		<meta charset="utf-8">
 		<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" media="screen, print" />
@@ -11,16 +11,44 @@
 		<meta name="ROBOTS" content="INDEX,FOLLOW">
 		<meta name="description" content="True stories from around the world." />
 		<meta name="keywords" content="story,local legend,life vignette" />
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+		</script>
 	</head>
 	
 	<body>
-		<a href="/index"><h1>Localtruestories.com</h1></a>
+
+		<div class="wrapper">
+
+			<div class="header">
+				<a href="/index"><h1><span>Local</span>Tales</h1></a>
 		
-		<h4>True stories from around the world.</h4>
+				<h4>True stories from around the world.</h4>
+			</div><!-- /end .header -->
+
+			<div class="messages">
+
+				{% with messages = get_flashed_messages() %}
+				{% if messages %}
+				<ul>
+				{% for message in messages %}
+					<li><h3>{{ message }}</h3></li>
+				{% endfor %}
+				</ul>
+	 	
+	 			{% endif %}
+	 			{% endwith %}
+
+	 		</div><!-- /end .messages -->
 		
-		{% block content %}{% endblock %}
+				{% block content %}{% endblock %}
 	
+			<div class="footer">
 	
+				<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br><br>©2014 <a href="mailto:n3uplas@gmail.com">Boris Upelj</a>
+
+			</div><!-- /end .footer -->
+	
+		</div><!-- /end .wrapper -->
 	
 	
 	</body>

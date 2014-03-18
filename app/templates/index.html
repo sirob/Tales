@@ -1,19 +1,70 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block content %} 
 
-<input type="button" value="Share your amazing story."><br><br>
-		
-<input type="field" value="title, location, tag, language, pseudonym"><input type="button"> 
-		
-<h2>Most upvoted stories</h2>
+  
 
-<h3>{{story1.title}}</h3>
-<h3>{{story2.title}}</h3>
-<h3>{{story3.title}}</h3>
-<h3>{{story4.title}}</h3>
-<h3>{{story5.title}}</h3>
-<h3>{{story6.title}}</h3>
+    <p style="text-align: center; font-size: 1.25em; font-style: italic;">All of you, who are always just waiting to hear about the lastest adventures <br>of your city's most vivid characters. This is for you.</p> 
+
+    <div class="titles">
+
+  {% for story in stories.items %}
+
+    <div class="title_wrapper">
+
+      <div class="voting" storyid="{{story.id}}">
+        <p>▲</p>
+        <p>{{story.votes}}1234</p> <!-- votes še ni declaran!! -->
+        <p>▼</p>
+      </div><!-- /end .voting -->
+
+      <script>
+      $(".voting p:nth-child(1)").click(function() {
+        var id = $("voting").data("storyid");
+        $.post("/vote/" + id, {vote: 'up')
+      })
+
+      $(".voting p:nth-child(3)").click(function() {
+        var id = $("voting").data("storyid")
+        $.post("/vote/" + id, {vote: 'down'})
+      })
+      </script>
+
+      <div class="title">
+    
+        <a href="/story/{{story.id}}"><h1>{{story.title}}</h1><p>{{story.location}}, {{story.time}}</p></a>
+
+      </div><!-- /end .title -->
+
+    </div><!-- /end .title_wrapper -->
+
+  {% endfor %}
+
+  <div class="pagination">
+    
+  {% if stories.has_prev %}
+      <a href="{{ url_for('index', page = stories.prev_num) }}">
+        << Newer stories</a>
+  {% else %} 
+  << Newer stories {% endif %} |
+  {% if stories.has_next %}
+      <a href="{{ url_for('index', page= stories.next_num) }}">Older stories >></a>
+  {% else %}
+  Older stories >>{% endif %}
+
+    </div><!-- /end .pagination -->
+
+    <div class="submit_box">
+
+      <p>There are many tales out there, worthy of being told,<br> just waiting to get out. This is your chance.<p>
+    
+      <div class="button">
+      <a href="/submit"><p>Share your amazing story</p></a>
+      </div><!-- /end .button -->
+
+    </div><!-- /end .submit_box -->
+    
+  </div><!-- /end .titles -->
 
 
 {% endblock %}

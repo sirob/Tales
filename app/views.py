@@ -1,42 +1,51 @@
+#-*- coding: utf-8 -*-
+
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
-from app import app, db
+from app import app, db, models
 from forms import PostForm
 from models import Story
 from datetime import datetime
+from config import STORIES_PER_PAGE
 
 @app.route('/')
 @app.route('/index')
-def index():
-	story1 = {'title': 'Najbl nora storija evah'} #fake storie titles
-	story2 = {'title': 'Mal mn nora storija'}
-	story3 = {'title': 'Cist mal nora storija'}
-	story4 = {'title': 'Neki neki'}
-	story5 = {'title': 'Neki'}
-	story6 = {'title': 'Se neki'}
-	return render_template("index.html",
-		story1 = story1,
-		story2 = story2,
-		story3 = story3,
-		story4 = story4,
-		story5 = story5,
-		story6 = story6,
-		)
+@app.route('/index/<int:page>')
+def index(page = 1):
+	stories = models.Story.query.order_by('timestamp desc').paginate(page, STORIES_PER_PAGE, False)
+	return render_template("index.html", stories = stories)
 
-@app.route('/submit_story', methods = ['GET', 'POST'])
-def submit_story():
+
+@app.route('/submit', methods = ['GET', 'POST'])
+def submit():
 	form = PostForm()
 	if form.validate_on_submit():
-		post = Story(title = form.post.data)
+		post = Story(title = form.title.data,
+			body = form.body.data,
+			location = form.location.data,
+			pseudonym = form.pseudonym.data,
+			time = form.time.data,
+			timestamp = datetime.utcnow())
 		db.session.add(post)
 		db.session.commit()
-		flash('Your story has been published!')
-		return redirect(url_for("story.html"))
-	return render_template("submit_story.html",
+		#flash("Thank you, this site depends on people like you. Here's your story!")
+		return redirect(url_for("story",
+			id = str(post.id)))
+	return render_template("submit.html",
 		form = form)
 		
 
-@app.route('/story/<title>')
-def story():
+@app.route('/story/<id>')
+def story(id):
+	story = models.Story.query.get(id)
 	return render_template("story.html",
-		title = title)
+		story = story)
+
+@app.route('/vote/<id>')
+def vote():
+	count = 0
+	if vote == 'down':
+		count = count - 1
+	else:
+		count = count + 1
+	return count

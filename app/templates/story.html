@@ -2,13 +2,28 @@
 
 {% block content %}
 
-<h1>{{story.title}}</h1>
+<div class="title">
 
-<p>By: {{story.pseudonym}}</p>
+	<h1>{{story.title}}</h1>
 
-<p>In: {{story.location}}</p>
+	<p class="location">{{story.location}}, {{story.time}}</p>
 
-<p>{{story.body}}</p>
+</div>
+
+<div class="text">
+
+	<p>{{story.body}}</p>
+
+</div>
+
+<div class = "pseudonym">
+
+	<p>published by: {{story.pseudonym}}</p>
+
+	<a href="/index"><p>Read more stories</p></a><a href="/submit"><p>Contribute your story</p></a>
+
+</div>   
+ 
 
 {% endblock %}
 
