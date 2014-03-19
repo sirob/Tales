@@ -47,10 +47,10 @@ def vote(id):
 	if request.method == 'POST':
 		vote = request.form['vote']
 		if vote == 'up':
-			post = Vote(story_id = story.id, value = 1)
+			voting = Vote(story_id = story.id, value = 1)
 		else:
-			post = Vote(story_id = story.id, value = -1)
+			voting = Vote(story_id = story.id, value = -1)
 		
-		db.session.add(post)
+		db.session.add(voting)
 		db.session.commit()
 	
