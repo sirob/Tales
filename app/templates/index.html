@@ -14,14 +14,14 @@
 
       <div class="voting" storyid="{{story.id}}">
         <p>▲</p>
-        <p>{{story.votes}}1234</p> <!-- votes še ni declaran!! -->
+        <p>{{story.votes}}</p> <!-- votes še ni declaran!! -->
         <p>▼</p>
       </div><!-- /end .voting -->
 
-      <script>
+      <!--<script>
       $(".voting p:nth-child(1)").click(function() {
         var id = $(this).data("storyid");
-        $.post("/vote/" + id, {vote: 'up')
+        $.post("/vote/" + id, {vote: 'up'})
       })
 
       $(".voting p:nth-child(3)").click(function() {
@@ -29,6 +29,7 @@
         $.post("/vote/" + id, {vote: 'down'})
       })
       </script>
+      -->
 
       <div class="title">
     
@@ -52,6 +53,8 @@
   {% else %}
   Older stories >>{% endif %}
 
+  <script type="text/javascript" src="{{ url_for('static', filename='voting.js') }}"></script>
+
     </div><!-- /end .pagination -->
 
     <div class="submit_box">
@@ -68,4 +71,4 @@
 
 
 {% endblock %}
-		
+

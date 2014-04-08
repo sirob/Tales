@@ -13,6 +13,7 @@ from config import STORIES_PER_PAGE
 @app.route('/index/<int:page>')
 def index(page = 1):
 	stories = models.Story.query.order_by('timestamp desc').paginate(page, STORIES_PER_PAGE, False)
+	#count_votes = len(models.Vote.query.all())
 	return render_template("index.html", stories = stories)
 
 
@@ -41,16 +42,33 @@ def story(id):
 	return render_template("story.html",
 		story = story)
 
-@app.route('/vote/<id>')
+@app.route('/vote/<id>', methods=['POST'])
 def vote(id):
+	print "id: " + str(id)
 	story = models.Story.query.get(id)
 	if request.method == 'POST':
+		ip_addr = request.remote_addr
 		vote = request.form['vote']
 		if vote == 'up':
-			voting = Vote(story_id = story.id, value = 1)
+			voting = models.Vote(story_id = story.id, value = 1, ip_addr = ip_addr)
 		else:
-			voting = Vote(story_id = story.id, value = -1)
+			voting = models.Vote(story_id = story.id, value = -1, ip_addr = ip_addr)
 		
 		db.session.add(voting)
 		db.session.commit()
+
+		votes = models.Vote.query.all()
+		count = []
+		for vote in votes:
+			if vote.story_id == id:
+				count.append(vote.value)
+		story.votes = sum(count)
+
+		db.session.commit()
 	
+		return str(voting.id)
+
+@app.route('/vote/count')
+def vote_count():
+	count = len(models.Vote.query.all())
+	return str(count)
