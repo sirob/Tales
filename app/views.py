@@ -60,9 +60,10 @@ def vote(id):
 		votes = models.Vote.query.all()
 		count = []
 		for vote in votes:
-			if vote.story_id == id:
+			if vote.story_id == story.id:
 				count.append(vote.value)
 		story.votes = sum(count)
+		print 'count:' +str(sum(count))
 
 		db.session.commit()
 	
