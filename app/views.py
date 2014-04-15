@@ -12,7 +12,7 @@ from config import STORIES_PER_PAGE
 @app.route('/index')
 @app.route('/index/<int:page>')
 def index(page = 1):
-	stories = models.Story.query.order_by('timestamp desc').paginate(page, STORIES_PER_PAGE, False)
+	stories = models.Story.query.order_by('votes desc').paginate(page, STORIES_PER_PAGE, False)
 	#count_votes = len(models.Vote.query.all())
 	return render_template("index.html", stories = stories)
 
