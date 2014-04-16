@@ -145,6 +145,10 @@ body {
 	background-color: #0154a5;
 }
 
+.text p {
+	line-height: 1.5em;
+}
+
 } /* end media all */
 
 @media screen and (min-width: 1200px) {

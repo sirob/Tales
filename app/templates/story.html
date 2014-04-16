@@ -2,27 +2,33 @@
 
 {% block content %}
 
-<div class="title">
+<div class="titles">
 
-	<h1>{{story.title}}</h1>
+	<div class="title">
 
-	<p class="location">{{story.location}}, {{story.time}}</p>
+		<h1>{{story.title}}</h1>
 
-</div>
+		<p class="location">{{story.location}}, {{story.time}}</p>
 
-<div class="text">
+	</div><!-- /end .title -->
 
-	<p>{{story.body}}</p>
+	<div class="text">
 
-</div>
+		<p>{{story.body}}</p>
 
-<div class = "pseudonym">
+	</div><!-- /end .text -->
 
-	<p>published by: {{story.pseudonym}}</p>
+	<div class="title">
 
-	<a href="/index"><p>Read more stories</p></a><a href="/submit"><p>Contribute your story</p></a>
+		<p class="location">published by: {{story.pseudonym}}</p>
 
-</div>   
+	</div><!-- /end .title -->
+
+
+	<a href="/index"><p>>> READ MORE STORIES</p></a><a href="/submit"><p>>> CONTRIBUTE YOUR STORY</p></a>
+
+
+</div><!-- /end .titles --> 
  
 
 {% endblock %}
