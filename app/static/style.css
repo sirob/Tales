@@ -158,6 +158,21 @@ body {
 	margin-right: 12em;
 }
 
+textarea {
+	font: normal 100%  Georgia, serif;
+	height: 20em;
+	width: 98.5%;
+}
+
+td {
+	text-align: right;
+	margin-bottom: 1em;
+}
+
+input {
+	font: normal 100%  Georgia, serif;
+}
+
 
 } /* end media screen and (min-width: 1200px) */
 
