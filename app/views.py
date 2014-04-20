@@ -7,13 +7,22 @@ from forms import PostForm
 from models import Story
 from datetime import datetime
 from config import STORIES_PER_PAGE
+from sqlalchemy import func
 
 @app.route('/')
 @app.route('/index')
 @app.route('/index/<int:page>')
 def index(page = 1):
-	stories = models.Story.query.order_by('votes desc').paginate(page, STORIES_PER_PAGE, False)
-	#count_votes = len(models.Vote.query.all())
+	# stories = models.Story.query.order_by('votes desc').paginate(page, STORIES_PER_PAGE, False)
+	start_index = (page) * STORIES_PER_PAGE
+	results = db.session.query\
+		(func.sum(models.Vote.value).label('votes'), models.Story).\
+		join(models.Story).\
+		group_by(models.Story.id).\
+		order_by('votes desc').\
+		offset(start_index)
+	stories = [r[1] for r in results]
+	
 	return render_template("index.html", stories = stories)
 
 
