@@ -57,17 +57,10 @@ def vote(id):
 		db.session.add(voting)
 		db.session.commit()
 
-		votes = models.Vote.query.all()
-		count = []
-		for vote in votes:
-			if vote.story_id == story.id:
-				count.append(vote.value)
-		story.votes = sum(count)
-		print 'count:' +str(sum(count))
-
-		db.session.commit()
+		print 'count:' + str(story.vote_count())
 	
-		return str(voting.id)
+		return str(story.vote_count())
+
 
 @app.route('/vote/count')
 def vote_count():

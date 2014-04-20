@@ -14,22 +14,9 @@
 
       <div class="voting" storyid="{{story.id}}">
         <p>▲</p>
-        <p>{{story.votes}}</p> <!-- votes še ni declaran!! -->
+        <p>{{story.vote_count()}}</p> <!-- votes še ni declaran!! -->
         <p>▼</p>
       </div><!-- /end .voting -->
-
-      <!--<script>
-      $(".voting p:nth-child(1)").click(function() {
-        var id = $(this).data("storyid");
-        $.post("/vote/" + id, {vote: 'up'})
-      })
-
-      $(".voting p:nth-child(3)").click(function() {
-        var id = $(this).data("storyid")
-        $.post("/vote/" + id, {vote: 'down'})
-      })
-      </script>
-      -->
 
       <div class="title">
     
