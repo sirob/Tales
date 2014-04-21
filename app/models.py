@@ -8,7 +8,13 @@ class Story(db.Model):
 	time = db.Column(db.String(90))
 	timestamp = db.Column(db.DateTime)
 	pseudonym = db.Column(db.String(64))
-	votes = db.Column(db.Integer)
+	votes = db.relationship('Vote', backref = 'story', lazy = 'dynamic')
+
+	def vote_count(self):
+		count = 0
+		for v in self.votes.all():
+			count += v.value
+		return count
 
 	def __repr__(self):
 		return '<Story %r>' % (self.title)
