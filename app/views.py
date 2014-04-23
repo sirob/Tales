@@ -14,14 +14,16 @@ from sqlalchemy import func
 @app.route('/index/<int:page>')
 def index(page = 1):
 	# stories = models.Story.query.order_by('votes desc').paginate(page, STORIES_PER_PAGE, False)
-	start_index = (page) * STORIES_PER_PAGE
+	start_index = (page - 1) * STORIES_PER_PAGE
 	results = db.session.query\
-		(func.sum(models.Vote.value).label('votes'), models.Story).\
-		join(models.Story).\
+		(models.Story, func.sum(models.Vote.value).label('votes')).\
+		outerjoin(models.Vote).\
 		group_by(models.Story.id).\
 		order_by('votes desc').\
 		offset(start_index)
-	stories = [r[1] for r in results]
+	#stories = db.session.execute("SELECT story.id,title,sum(value) FROM story LEFT JOIN vote ON vote.story_id=story.id")
+	stories = [r[0] for r in results]
+	print len(stories)
 	
 	return render_template("index.html", stories = stories)
 
