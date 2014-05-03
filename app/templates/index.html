@@ -2,11 +2,11 @@
 
 {% block content %} 
 
-  
+  <div class="titles">
 
-    <p style="text-align: center; font-size: 1.25em; font-style: italic;">All of you, who are always just waiting to hear about the lastest adventures <br>of your city's most vivid characters. This is for you.</p> 
+    <p style="text-align: center; font-size: 1.25em; font-style: italic;">All of you, who are always just waiting to hear about the latest adventures of your city's most vivid characters. This is for you.</p> 
 
-    <div class="titles">
+    
 
   {% for story in stories %}
 
@@ -29,7 +29,21 @@
   {% endfor %}
 
   <div class="pagination">
+
+
+  {% if stories %}
+    <a href = "{{ url_for('index', page = page - 1) }}">
+      << Previous</a>
+  {% else %}
+  << Previous {% endif %} |
+  {% if stories %}
+    <a href = "{{ url_for('index', page = page + 1) }}">
+      Next >></a>
+  {% else %}
+  Next >> {% endif %}
+
     
+  <!--
   {% if stories.has_prev %}
       <a href="{{ url_for('index', page = stories.prev_num) }}">
         << Newer stories</a>
@@ -38,9 +52,9 @@
   {% if stories.has_next %}
       <a href="{{ url_for('index', page= stories.next_num) }}">Older stories >></a>
   {% else %}
-  Older stories >>{% endif %}
+  Older stories >>{% endif %} -->
 
-  <script type="text/javascript" src="{{ url_for('static', filename='voting.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='voting.js') }}"></script> 
 
     </div><!-- /end .pagination -->
 

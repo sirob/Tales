@@ -13,7 +13,7 @@ from sqlalchemy import func
 @app.route('/index')
 @app.route('/index/<int:page>')
 def index(page = 1):
-	# stories = models.Story.query.order_by('votes desc').paginate(page, STORIES_PER_PAGE, False)
+	#stories = models.Story.query.order_by('votes desc').paginate(page, STORIES_PER_PAGE, False)
 	start_index = (page - 1) * STORIES_PER_PAGE
 	results = db.session.query\
 		(models.Story, func.sum(models.Vote.value).label('votes')).\
@@ -24,9 +24,13 @@ def index(page = 1):
 	#stories = db.session.execute("SELECT story.id,title,sum(value) FROM story LEFT JOIN vote ON vote.story_id=story.id")
 	stories = [r[0] for r in results]
 	print len(stories)
-	
-	return render_template("index.html", stories = stories)
 
+	#story_slices = [stories[x:x+10] for x in range(0, len(stories), 10)]
+	y = page + 10
+	x = y - 10
+	story_slice = stories[x:y]
+	
+	return render_template("index.html", stories = story_slice)
 
 @app.route('/submit', methods = ['GET', 'POST'])
 def submit():
