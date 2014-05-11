@@ -20,21 +20,27 @@ def index(page = 1):
 		outerjoin(models.Vote).\
 		group_by(models.Story.id).\
 		order_by('votes desc').\
-		offset(start_index)
-	#stories = db.session.execute("SELECT story.id,title,sum(value) FROM story LEFT JOIN vote ON vote.story_id=story.id")
+		offset(start_index).limit(STORIES_PER_PAGE + 1)
+	
 	stories = [r[0] for r in results]
 	print len(stories)
 
-	#story_slices = [stories[x:x+10] for x in range(0, len(stories), 10)]
-	y = page + 10
-	x = y - 10
-	story_slice = stories[x:y]
+	
+	#x = y - 10
+	#story_slice = stories[x:y]
+	#next = None
+	#if (len(stories) / page) > 10:
+	#	next = True
 	next = None
-	if (len(stories) / page) > 10:
+	if len(stories) > 10:
 		next = True
+	prev = None
+	if page > 1:
+		prev = True
+	show = stories[:10]
 
 	
-	return render_template("index.html", stories = story_slice, page = page, next = next)
+	return render_template("index.html", stories = show, page = page, next = next, prev = prev)
 
 @app.route('/submit', methods = ['GET', 'POST'])
 def submit():

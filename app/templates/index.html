@@ -29,7 +29,7 @@
   <div class="pagination">
 
 
-  {% if page > 1 %}
+  {% if prev %}
     <a href = "{{ url_for('index', page = page - 1) }}">
       << Previous</a>
   {% else %}
