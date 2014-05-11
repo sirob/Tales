@@ -12,7 +12,13 @@
 
 	</div><!-- /end .title -->
 
-	<div class="text">
+	<div class="voting" storyid="{{story.id}}">
+        <p>▲</p>
+        <p>{{story.vote_count()}}</p> <!-- votes še ni declaran!! -->
+        <p>▼</p>
+      </div>
+
+      <div class="text">
 
 		<p>{{story.body}}</p>
 
@@ -29,6 +35,8 @@
 
 
 </div><!-- /end .titles --> 
+
+<script type="text/javascript" src="{{ url_for('static', filename='voting.js') }}"></script> 
  
 
 {% endblock %}

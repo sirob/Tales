@@ -29,8 +29,12 @@ def index(page = 1):
 	y = page + 10
 	x = y - 10
 	story_slice = stories[x:y]
+	next = None
+	if (len(stories) / page) > 10:
+		next = True
+
 	
-	return render_template("index.html", stories = story_slice)
+	return render_template("index.html", stories = story_slice, page = page, next = next)
 
 @app.route('/submit', methods = ['GET', 'POST'])
 def submit():
